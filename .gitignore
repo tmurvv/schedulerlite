@@ -1,0 +1,17 @@
+# WebStorm / IntelliJ
+.idea/
+*.iml
+
+# Node / pnpm
+node_modules/
+pnpm-lock.yaml
+
+# Build outputs
+dist/
+build/
+.out/
+cdk.out/
+
+# Env / secrets
+.env
+.env.*
