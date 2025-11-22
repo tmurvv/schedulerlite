@@ -19,6 +19,6 @@
 
     "types": ["node", "aws-lambda"]
   },
-  "include": ["src"],
+  "include": ["src", "**/*.test.ts"],
   "exclude": ["node_modules", "dist"]
 }
