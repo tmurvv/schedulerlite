@@ -6,29 +6,24 @@ phases:
       - npm install -g pnpm
       - pnpm --version
       - pnpm install
-
   build:
     commands:
       - echo "Building backend: scheduler"
       - cd apps/backend/scheduler
       - pnpm build || true
       - cd ../../..
-
       - echo "Building backend: timesheets"
       - cd apps/backend/timesheets
       - pnpm build || true
       - cd ../../..
-
       - echo "Building frontend: scheduler"
       - cd apps/frontend/scheduler
       - pnpm build
       - cd ../../..
-
       - echo "Building frontend: timesheets"
       - cd apps/frontend/timesheets
       - pnpm build
       - cd ../../..
-
 artifacts:
   files:
     - '**/*'
