@@ -1,7 +1,7 @@
 /// <reference types="jest" />
 
-import {onePlusOne} from "./smoke-test";
+import { onePlusOne } from "./smoke-test";
 
 test("smoke test", () => {
-    expect(onePlusOne()).toBe(2);
+  expect(onePlusOne()).toBe(2);
 });

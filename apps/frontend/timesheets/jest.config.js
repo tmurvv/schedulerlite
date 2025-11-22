@@ -1,12 +1,12 @@
 export default {
-    preset: "ts-jest",
-    testEnvironment: "node",
+  preset: "ts-jest",
+  testEnvironment: "node",
 
-    // Include .test.ts files anywhere
-    testMatch: ["**/*.test.ts"],
+  // Include .test.ts files anywhere
+  testMatch: ["**/*.test.ts"],
 
-    // Transpile TS
-    transform: {
-        "^.+\\.tsx?$": "ts-jest"
-    }
+  // Transpile TS
+  transform: {
+    "^.+\\.tsx?$": "ts-jest",
+  },
 };
