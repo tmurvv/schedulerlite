@@ -9,17 +9,11 @@ phases:
 
   build:
     commands:
-      # cd apps/backend/scheduler
-      # pnpm build
-      # cd ../../..
       - echo "Backend scheduler: NYI"
       - echo "Building backend: timesheets"
       - cd apps/backend/timesheets
       - pnpm build
       - cd ../../..
-      # cd apps/frontend/scheduler
-      # pnpm build
-      # cd ../../..
       - echo "Frontend scheduler: NYI"
       - echo "Building frontend: timesheets"
       - cd apps/frontend/timesheets
