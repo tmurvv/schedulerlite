@@ -10,9 +10,9 @@ phases:
   build:
     commands:
       - echo "Backend scheduler: NYI"
-      # cd apps/backend/scheduler
-      # pnpm build
-      # cd ../../..
+        # cd apps/backend/scheduler
+        # pnpm build
+        # cd ../../..
 
       - echo "Building backend: timesheets"
       - cd apps/backend/timesheets
@@ -20,16 +20,19 @@ phases:
       - cd ../../..
 
       - echo "Frontend scheduler: NYI"
-      # cd apps/frontend/scheduler
-      # pnpm build
-      # cd ../../..
+        # cd apps/frontend/scheduler
+        # pnpm build
+        # cd ../../..
 
       - echo "Building frontend: timesheets"
       - cd apps/frontend/timesheets
       - pnpm build
       - cd ../../..
 
+      - echo "Synthesizing CDK"
+      - pnpm exec cdk synth --output dist/cdk
+
 artifacts:
   files:
     - '**/*'
-  base-directory: .
+  base-directory: dist/cdk
