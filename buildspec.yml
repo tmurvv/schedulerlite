@@ -36,9 +36,11 @@ phases:
       - cd ../../..
 
       - echo "Synthesizing CDK"
+      - cd infra
       - pnpm exec cdk synth --output dist/cdk
+      - cd ..
 
 artifacts:
   files:
     - '**/*'
-  base-directory: dist/cdk
+  base-directory: infra/dist/cdk

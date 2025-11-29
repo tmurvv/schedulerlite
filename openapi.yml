@@ -1,0 +1,253 @@
+openapi: 3.0.3
+info:
+  title: SchedulerLite Timesheets API
+  version: 1.0.0
+  description: |
+    Basic API definition for health check and timesheet operations.
+
+servers:
+  - url: https://api.schedulerlite.take2tech.ca
+    description: Production server
+  - url: http://localhost:3000
+    description: Local development server
+
+paths:
+  /v1/health:
+    get:
+      tags:
+        - Health
+      summary: Health check
+      description: Returns basic health information for the service.
+      responses:
+        "200":
+          description: Service is healthy.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthResponse"
+
+  /v1/timesheets:
+    get:
+      tags:
+        - Timesheets
+      summary: Get timesheets
+      description: >
+        Returns a list of timesheets. Optionally filter by userId using a query parameter.
+      parameters:
+        - in: query
+          name: userId
+          schema:
+            type: string
+          required: false
+          description: If provided, returns timesheets for the specified user.
+      responses:
+        "200":
+          description: List of timesheets.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Timesheet"
+        "400":
+          description: Invalid query parameters.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+    put:
+      tags:
+        - Timesheets
+      summary: Create or update a timesheet
+      description: >
+        Creates a new timesheet or updates an existing one based on the provided payload.
+        If an id is present, the server may treat this as an update; if not, as a create.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TimesheetUpsert"
+      responses:
+        "200":
+          description: Timesheet created or updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Timesheet"
+        "400":
+          description: Invalid timesheet data.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: Timesheet not found for update.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /v1/timesheets/by-user/{userId}:
+    get:
+      tags:
+        - Timesheets
+      summary: Get timesheets for a specific user
+      description: Returns all timesheets associated with the given userId.
+      parameters:
+        - $ref: "#/components/parameters/UserIdPath"
+      responses:
+        "200":
+          description: List of timesheets for the user.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Timesheet"
+        "404":
+          description: No timesheets found for this user.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /v1/timesheets/{timesheetId}:
+    get:
+      tags:
+        - Timesheets
+      summary: Get a single timesheet
+      description: Returns a single timesheet by its ID.
+      parameters:
+        - $ref: "#/components/parameters/TimesheetIdPath"
+      responses:
+        "200":
+          description: Timesheet found.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Timesheet"
+        "404":
+          description: Timesheet not found.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+    delete:
+      tags:
+        - Timesheets
+      summary: Delete a timesheet
+      description: Deletes a timesheet by its ID.
+      parameters:
+        - $ref: "#/components/parameters/TimesheetIdPath"
+      responses:
+        "204":
+          description: Timesheet deleted successfully. No content is returned.
+        "404":
+          description: Timesheet not found.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+components:
+  parameters:
+    TimesheetIdPath:
+      name: timesheetId
+      in: path
+      required: true
+      description: Unique identifier of the timesheet.
+      schema:
+        type: string
+
+    UserIdPath:
+      name: userId
+      in: path
+      required: true
+      description: Unique identifier of the user.
+      schema:
+        type: string
+
+  schemas:
+    HealthResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: ok
+        timestamp:
+          type: string
+          format: date-time
+          example: "2025-11-29T17:30:00Z"
+
+    Timesheet:
+      type: object
+      description: A timesheet record.
+      properties:
+        id:
+          type: string
+          example: ts_12345
+        userId:
+          type: string
+          example: user_abc
+        date:
+          type: string
+          format: date
+          example: "2025-11-29"
+        hours:
+          type: number
+          format: float
+          example: 8
+        status:
+          type: string
+          description: Status of the timesheet.
+          example: submitted
+        notes:
+          type: string
+          nullable: true
+          example: "Worked on project X."
+      required:
+        - id
+        - userId
+        - date
+        - hours
+
+    TimesheetUpsert:
+      type: object
+      description: Payload for creating or updating a timesheet.
+      properties:
+        id:
+          type: string
+          nullable: true
+          description: >
+            Optional. If provided, the server may treat this as an update. If omitted, a new timesheet may be created.
+        userId:
+          type: string
+        date:
+          type: string
+          format: date
+        hours:
+          type: number
+          format: float
+        status:
+          type: string
+          example: draft
+        notes:
+          type: string
+          nullable: true
+      required:
+        - userId
+        - date
+        - hours
+
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Resource not found."
+        code:
+          type: string
+          example: "NOT_FOUND"
