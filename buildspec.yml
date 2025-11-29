@@ -38,7 +38,7 @@ phases:
 
       - echo "Synthesizing CDK"
       - cd infra
-      - pnpm install       # <-- Needed for CDK synth
+      - pnpm install
       - pnpm exec cdk synth --output dist/cdk
       - cd ..
 
