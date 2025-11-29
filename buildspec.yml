@@ -6,10 +6,16 @@ phases:
       - npm install -g pnpm
       - pnpm --version
 
-      # Install Node 20 on Ubuntu-based CodeBuild image
+      # Install Node 20 on Ubuntu CodeBuild image
       - curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
       - apt-get install -y nodejs
+
+      # Force PATH to use Node 20 instead of preinstalled Node 18
+      - export PATH=/usr/bin:$PATH
+      - hash -r
+
       - node --version
+
       - pnpm install
 
   build:
