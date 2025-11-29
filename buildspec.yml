@@ -6,9 +6,9 @@ phases:
       - npm install -g pnpm
       - pnpm --version
 
-      # Install Node 20 for Vite builds
-      - curl -fsSL https://rpm.nodesource.com/setup_20.x | bash -
-      - yum install -y nodejs
+      # Install Node 20 on Ubuntu-based CodeBuild image
+      - curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+      - apt-get install -y nodejs
       - node --version
 
       - pnpm install
