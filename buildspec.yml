@@ -16,6 +16,9 @@ phases:
 
       - node --version
 
+      # Install CDK CLI globally
+      - npm install -g aws-cdk
+
       - pnpm install
 
   build:
