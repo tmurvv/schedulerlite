@@ -19,6 +19,7 @@ phases:
       # Install CDK CLI globally
       - npm install -g aws-cdk
 
+      # install root workspace deps
       - pnpm install
 
   build:
@@ -37,10 +38,9 @@ phases:
 
       - echo "Synthesizing CDK"
       - cd infra
+      - pnpm install       # <-- Needed for CDK synth
       - pnpm exec cdk synth --output dist/cdk
       - cd ..
 
-artifacts:
-  files:
-    - '**/*'
-  base-directory: infra/dist/cdk
+      - echo "Copying frontend build into CDK output for deploy stage"
+      - mkdir -p inf
