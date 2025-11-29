@@ -5,19 +5,28 @@ phases:
     commands:
       - npm install -g pnpm
       - pnpm --version
+
+      # Install Node 20 for Vite builds
+      - curl -fsSL https://rpm.nodesource.com/setup_20.x | bash -
+      - yum install -y nodejs
+      - node --version
+
       - pnpm install
+
   build:
     commands:
-      - echo "Backend scheduler NYI"
-      - echo "Building backend timesheets"
+      - echo "Backend scheduler - NYI"
+      - echo "Building backend - timesheets"
       - cd apps/backend/timesheets
       - pnpm build
       - cd ../../..
-      - echo "Frontend scheduler NYI"
-      - echo "Building frontend timesheets"
+
+      - echo "Frontend scheduler - NYI"
+      - echo "Building frontend - timesheets"
       - cd apps/frontend/timesheets
       - pnpm build
       - cd ../../..
+
       - echo "Synthesizing CDK"
       - pnpm exec cdk synth --output dist/cdk
 
