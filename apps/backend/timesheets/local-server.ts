@@ -6,13 +6,6 @@ import { handler } from "./src/handler";
 const app = express();
 const port = 3000;
 
-type LambdaResult = {
-    statusCode?: number;
-    headers?: Record<string, string>;
-    body?: string;
-    isBase64Encoded?: boolean;
-};
-
 type LambdaEvent = {
     httpMethod: string;
     path: string;
@@ -39,12 +32,14 @@ app.use(express.text({ type: "*/*" }));
 app.use(async (request: Request, response: Response) => {
     try {
         const lambdaEvent = buildLambdaEvent(request, request.body);
-        const lambdaResult = (await handler(lambdaEvent)) as LambdaResult;
+        // this is only for local development so we are ok with an any type
+        const lambdaResult = await handler(lambdaEvent as any);
+
 
         if (lambdaResult.headers) {
             Object.entries(lambdaResult.headers).forEach(
                 ([headerName, headerValue]) => {
-                    response.set(headerName, headerValue);
+                    response.set(headerName, String(headerValue));
                 },
             );
         }
