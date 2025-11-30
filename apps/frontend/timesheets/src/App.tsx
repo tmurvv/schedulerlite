@@ -22,7 +22,7 @@ function App() {
           count is {count}
         </button>
         <p>
-          Hello from SchedulerLite FE v0.0.03
+          Hello from SchedulerLite FE v0.0.04
         </p>
       </div>
       <p className="read-the-docs">
