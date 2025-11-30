@@ -9,7 +9,7 @@ import {
   aws_cloudfront as cloudfront,
   aws_cloudfront_origins as origins,
   aws_lambda as lambda,
-  aws_s3 as s3,
+  aws_s3 as s3
 } from "aws-cdk-lib";
 import { Construct } from "constructs";
 
@@ -41,20 +41,13 @@ export class TimesheetsStack extends Stack {
       },
     );
 
-    const api = new apigw.RestApi(this, "TimesheetsApi", {
-      restApiName: "TimesheetsApi",
+    new apigw.LambdaRestApi(this, "TimesheetsApi", {
+      handler: handlerFunction,
+      proxy: true,
       domainName: {
         domainName: "api.schedulerlite.take2tech.ca",
         certificate: apiCertificate,
       },
-      deployOptions: {
-        stageName: "prod",
-      },
-    });
-
-    api.root.addProxy({
-      anyMethod: true,
-      defaultIntegration: new apigw.LambdaIntegration(handlerFunction),
     });
 
     const frontendBucket = new s3.Bucket(this, "SchedulerLiteFrontendBucket", {
