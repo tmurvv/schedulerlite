@@ -10,7 +10,6 @@ import {
   aws_cloudfront_origins as origins,
   aws_lambda as lambda,
   aws_s3 as s3,
-  aws_s3_deployment as s3deploy,
 } from "aws-cdk-lib";
 import { Construct } from "constructs";
 
@@ -18,10 +17,10 @@ export class TimesheetsStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    const helloFunction = new lambda.Function(this, "HelloFunction", {
+    const handlerFunction = new lambda.Function(this, "HandlerFunction", {
       runtime: lambda.Runtime.NODEJS_20_X,
       handler: "handler.handler",
-      code: lambda.Code.fromAsset("../apps/backend/timesheets/dist/hello"),
+      code: lambda.Code.fromAsset("../apps/backend/timesheets/dist"),
     });
 
     const apiCertificate = new acm.Certificate(
@@ -42,13 +41,20 @@ export class TimesheetsStack extends Stack {
       },
     );
 
-    new apigw.LambdaRestApi(this, "TimesheetsApi", {
-      handler: helloFunction,
-      proxy: true,
+    const api = new apigw.RestApi(this, "TimesheetsApi", {
+      restApiName: "TimesheetsApi",
       domainName: {
         domainName: "api.schedulerlite.take2tech.ca",
         certificate: apiCertificate,
       },
+      deployOptions: {
+        stageName: "prod",
+      },
+    });
+
+    api.root.addProxy({
+      anyMethod: true,
+      defaultIntegration: new apigw.LambdaIntegration(handlerFunction),
     });
 
     const frontendBucket = new s3.Bucket(this, "SchedulerLiteFrontendBucket", {

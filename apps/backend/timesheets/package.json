@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "esbuild src/hello/handler.ts --bundle --platform=node --target=node20 --outfile=dist/hello/handler.js",
+    "build": "esbuild src/handler.ts --bundle --platform=node --target=node20 --outfile=dist/handler.js",
+    "dev": "pnpm build && ts-node local-server.ts",
     "test": "vitest",
     "test:watch": "vitest --watch",
     "test:coverage": "vitest --coverage"
@@ -17,10 +18,12 @@
     "@types/node": "^24.10.1",
     "aws-lambda": "^1.0.7",
     "esbuild": "^0.27.0",
+    "express": "^5.1.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
   },
   "devDependencies": {
+    "@types/express": "^5.0.5",
     "@vitest/coverage-v8": "^4.0.13",
     "vitest": "^4.0.13"
   }
