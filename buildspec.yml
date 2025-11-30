@@ -43,4 +43,10 @@ phases:
       - cd ..
 
       - echo "Copying frontend build into CDK output for deploy stage"
-      - mkdir -p inf
+      - mkdir -p infra/dist/cdk/frontend
+      - cp -r apps/frontend/timesheets/dist/* infra/dist/cdk/frontend/
+
+artifacts:
+  files:
+    - '**/*'
+  base-directory: infra/dist/cdk
