@@ -1,30 +1,28 @@
 {
   "name": "timesheets",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
   "scripts": {
     "build": "esbuild src/handler.ts --bundle --platform=node --target=node20 --outfile=dist/handler.js",
-    "dev": "pnpm build && ts-node local-server.ts",
+    "dev": "pnpm build && ts-node src/local-server.ts",
     "test": "vitest",
     "test:watch": "vitest --watch",
     "test:coverage": "vitest --coverage"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "@types/aws-lambda": "^8.10.158",
-    "@types/node": "^24.10.1",
     "aws-lambda": "^1.0.7",
-    "esbuild": "^0.27.0",
+    "dotenv": "^16.4.5",
     "express": "^5.1.0",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.9.3"
+    "mongodb": "^6.5.0"
   },
   "devDependencies": {
+    "@types/aws-lambda": "^8.10.158",
     "@types/express": "^5.0.5",
+    "@types/node": "^24.10.1",
     "@vitest/coverage-v8": "^4.0.13",
+    "esbuild": "^0.27.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3",
     "vitest": "^4.0.13"
   }
 }
