@@ -1,3 +1,7 @@
+// Enum replacement pattern: runtime const + derived union type.
+// Provides type safety and runtime validation without creating a
+// runtime object. Import types with `import type`, values normally.
+
 export const TYPE_OF_WORK = [
     "Cabinetry",
     "Cleaning",

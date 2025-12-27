@@ -3,17 +3,56 @@ import {APIGatewayProxyEvent, APIGatewayProxyResult} from "aws-lambda";
 import {getDb} from "../../db";
 import {isTypeOfWork} from "@schedulerlite/shared/src";
 
+const corsHeaders = {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers": "Content-Type, Authorization",
+    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,OPTIONS",
+};
+
 export const handlePutTimesheet = async (
     event: APIGatewayProxyEvent,
 ): Promise<APIGatewayProxyResult> => {
-    const timesheetId = event.path.split("/").pop();
-    if (!timesheetId || !event.body) {
-        return {statusCode: 400, headers: {"Content-Type": "application/json"}, body: JSON.stringify({error: "Missing timesheet id or body"})};
+    // Preflight support (local + prod safety)
+    if (event.httpMethod === "OPTIONS") {
+        return {
+            statusCode: 200,
+            headers: corsHeaders,
+            body: "",
+        };
     }
 
-    const {userId, projectId, start, end, lunchInMinutes, typeOfWork, notes} = JSON.parse(event.body);
-    if (!userId || !projectId || !start || !end || !isTypeOfWork(typeOfWork)) {
-        return {statusCode: 400, headers: {"Content-Type": "application/json"}, body: JSON.stringify({error: "Invalid or missing required fields"})};
+    const timesheetId = event.path.split("/").pop();
+    if (!timesheetId || !event.body) {
+        return {
+            statusCode: 400,
+            headers: corsHeaders,
+            body: JSON.stringify({error: "Missing timesheet id or body"}),
+        };
+    }
+
+    const {
+        userId,
+        projectId,
+        start,
+        end,
+        lunchInMinutes,
+        typeOfWork,
+        notes,
+    } = JSON.parse(event.body);
+
+    if (
+        !userId ||
+        !projectId ||
+        !start ||
+        !end ||
+        !isTypeOfWork(typeOfWork)
+    ) {
+        return {
+            statusCode: 400,
+            headers: corsHeaders,
+            body: JSON.stringify({error: "Invalid or missing required fields"}),
+        };
     }
 
     const db = await getDb();
@@ -32,10 +71,17 @@ export const handlePutTimesheet = async (
                 notes,
                 updatedOn: now,
             },
-            $setOnInsert: {id: timesheetId, createdOn: now},
+            $setOnInsert: {
+                id: timesheetId,
+                createdOn: now,
+            },
         },
         {upsert: true, returnDocument: "after"},
     );
 
-    return {statusCode: 200, headers: {"Content-Type": "application/json"}, body: JSON.stringify(result)};
+    return {
+        statusCode: 200,
+        headers: corsHeaders,
+        body: JSON.stringify(result),
+    };
 };
