@@ -1,15 +1,16 @@
 {
-  "name": "timesheets",
+  "name": "@schedulerlite/timesheets-api",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "build": "esbuild src/handler.ts --bundle --platform=node --target=node20 --outfile=dist/handler.js",
-    "dev": "pnpm build && ts-node src/local-server.ts",
+    "dev": "nodemon --watch src --ext ts,json --exec ts-node src/local-server.ts",
     "test": "vitest",
     "test:watch": "vitest --watch",
     "test:coverage": "vitest --coverage"
   },
   "dependencies": {
+    "@schedulerlite/shared": "workspace:*",
     "aws-lambda": "^1.0.7",
     "dotenv": "^16.4.5",
     "express": "^5.1.0",
@@ -21,6 +22,7 @@
     "@types/node": "^24.10.1",
     "@vitest/coverage-v8": "^4.0.13",
     "esbuild": "^0.27.0",
+    "nodemon": "^3.1.9",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
     "vitest": "^4.0.13"

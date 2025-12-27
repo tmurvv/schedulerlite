@@ -1,7 +1,7 @@
 // src/controllers/timesheets/handle-put-timesheet.ts
 import {APIGatewayProxyEvent, APIGatewayProxyResult} from "aws-lambda";
 import {getDb} from "../../db";
-import {isTypeOfWork} from "../../enums/type-of-work";
+import {isTypeOfWork} from "@schedulerlite/shared/src";
 
 export const handlePutTimesheet = async (
     event: APIGatewayProxyEvent,
