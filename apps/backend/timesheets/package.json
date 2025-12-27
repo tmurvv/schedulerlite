@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "esbuild src/handler.ts --bundle --platform=node --target=node20 --outfile=dist/handler.js",
-    "dev": "nodemon --watch src --ext ts,json --exec ts-node src/local-server.ts",
+    "dev": "nodemon --watch src --ext ts,json --exec tsx src/local-server.ts",
     "test": "vitest",
     "test:watch": "vitest --watch",
     "test:coverage": "vitest --coverage"
@@ -23,7 +23,6 @@
     "@vitest/coverage-v8": "^4.0.13",
     "esbuild": "^0.27.0",
     "nodemon": "^3.1.9",
-    "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
     "vitest": "^4.0.13"
   }

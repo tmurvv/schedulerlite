@@ -1,4 +1,4 @@
-import {TypeOfWork} from "../enums/type-of-work";
+import type {TypeOfWork} from "../enums/type-of-work";
 
 export type Timesheet = {
     id: string;

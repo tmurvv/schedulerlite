@@ -1,5 +1,5 @@
-import {AppRole} from "../enums/app-role";
-import {BusinessRole} from "../enums/business-role";
+import type {AppRole} from "../enums/app-role";
+import type {BusinessRole} from "../enums/business-role";
 
 export type User = {
     id: string;
