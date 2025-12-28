@@ -20,7 +20,7 @@ export class TimesheetsStack extends Stack {
     const handlerFunction = new lambda.Function(this, "HandlerFunction", {
       runtime: lambda.Runtime.NODEJS_20_X,
       handler: "handler.handler",
-      code: lambda.Code.fromAsset("../apps/backend/timesheets/dist"),
+      code: lambda.Code.fromAsset("../apps/timesheets/api/dist"),
     });
 
     const apiCertificate = new acm.Certificate(
