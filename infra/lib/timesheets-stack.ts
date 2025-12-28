@@ -9,7 +9,7 @@ import {
   aws_cloudfront as cloudfront,
   aws_cloudfront_origins as origins,
   aws_lambda as lambda,
-  aws_s3 as s3
+  aws_s3 as s3,
 } from "aws-cdk-lib";
 import { Construct } from "constructs";
 

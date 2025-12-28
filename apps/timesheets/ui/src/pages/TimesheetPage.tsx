@@ -45,9 +45,9 @@ export const TimesheetPage = () => {
   };
 
   const { control, handleSubmit, register, reset, setValue } =
-      useForm<TimesheetFormValues>({
-        defaultValues: getDefaultValues(),
-      });
+    useForm<TimesheetFormValues>({
+      defaultValues: getDefaultValues(),
+    });
 
   const onSubmit = async (data: TimesheetFormValues) => {
     try {
@@ -70,84 +70,84 @@ export const TimesheetPage = () => {
       setValue("typeOfWork", "", { shouldValidate: false });
     } catch (error) {
       const message =
-          error instanceof Error ? error.message : "Failed to save timesheet";
+        error instanceof Error ? error.message : "Failed to save timesheet";
       alert(message);
     }
   };
 
   return (
-      <Box sx={{ bgcolor: "background.default", minHeight: "100vh" }}>
-        <Header title="" />
+    <Box sx={{ bgcolor: "background.default", minHeight: "100vh" }}>
+      <Header title="" />
 
-        <Box sx={{ p: 2 }}>
-          <Paper sx={{ maxWidth: 600, mx: "auto", p: 3 }}>
-            <Typography sx={{ mb: 2 }} variant="h6">
-              Timesheet
-            </Typography>
+      <Box sx={{ p: 2 }}>
+        <Paper sx={{ maxWidth: 600, mx: "auto", p: 3 }}>
+          <Typography sx={{ mb: 2 }} variant="h6">
+            Timesheet
+          </Typography>
 
-            <Box
-                component="form"
-                onSubmit={handleSubmit(onSubmit)}
-                sx={{ display: "flex", flexDirection: "column", gap: 2 }}
-            >
-              <TextField
-                  label="Project ID"
-                  {...register("projectId", { required: true })}
-              />
+          <Box
+            component="form"
+            onSubmit={handleSubmit(onSubmit)}
+            sx={{ display: "flex", flexDirection: "column", gap: 2 }}
+          >
+            <TextField
+              label="Project ID"
+              {...register("projectId", { required: true })}
+            />
 
-              <TextField
-                  InputLabelProps={{ shrink: true }}
-                  label="Start Time"
-                  type="datetime-local"
-                  {...register("start", { required: true })}
-              />
+            <TextField
+              InputLabelProps={{ shrink: true }}
+              label="Start Time"
+              type="datetime-local"
+              {...register("start", { required: true })}
+            />
 
-              <TextField
-                  InputLabelProps={{ shrink: true }}
-                  label="End Time"
-                  type="datetime-local"
-                  {...register("end", { required: true })}
-              />
+            <TextField
+              InputLabelProps={{ shrink: true }}
+              label="End Time"
+              type="datetime-local"
+              {...register("end", { required: true })}
+            />
 
-              <TextField
-                  label="Lunch (minutes)"
-                  type="number"
-                  {...register("lunchInMinutes", { valueAsNumber: true })}
-              />
+            <TextField
+              label="Lunch (minutes)"
+              type="number"
+              {...register("lunchInMinutes", { valueAsNumber: true })}
+            />
 
-              <Controller
-                  control={control}
-                  name="typeOfWork"
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                      <TextField
-                          label="Type of Work"
-                          onChange={field.onChange}
-                          select
-                          value={field.value ?? ""}
-                      >
-                        {TYPE_OF_WORK.map((typeOfWorkValue) => (
-                            <MenuItem key={typeOfWorkValue} value={typeOfWorkValue}>
-                              {typeOfWorkValue}
-                            </MenuItem>
-                        ))}
-                      </TextField>
-                  )}
-              />
+            <Controller
+              control={control}
+              name="typeOfWork"
+              rules={{ required: true }}
+              render={({ field }) => (
+                <TextField
+                  label="Type of Work"
+                  onChange={field.onChange}
+                  select
+                  value={field.value ?? ""}
+                >
+                  {TYPE_OF_WORK.map((typeOfWorkValue) => (
+                    <MenuItem key={typeOfWorkValue} value={typeOfWorkValue}>
+                      {typeOfWorkValue}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              )}
+            />
 
-              <TextField
-                  label="Notes"
-                  multiline
-                  rows={3}
-                  {...register("notes")}
-              />
+            <TextField
+              label="Notes"
+              multiline
+              rows={3}
+              {...register("notes")}
+            />
 
-              <Button color="secondary" type="submit" variant="contained">
-                Save Timesheet
-              </Button>
-            </Box>
-          </Paper>
-        </Box>
+            <Button color="secondary" type="submit" variant="contained">
+              Save Timesheet
+            </Button>
+          </Box>
+        </Paper>
       </Box>
+    </Box>
   );
 };

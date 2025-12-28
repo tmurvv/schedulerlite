@@ -1,14 +1,11 @@
 // src/handler.ts
-import {
-  APIGatewayProxyEvent,
-  APIGatewayProxyResult,
-} from "aws-lambda";
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 
-import {routeRequest} from "./routes/routes";
+import { routeRequest } from "./routes/routes";
 
 export const handler = async (
-    event: APIGatewayProxyEvent,
+  event: APIGatewayProxyEvent,
 ): Promise<APIGatewayProxyResult> => {
-  const {httpMethod, path} = event;
-  return routeRequest({event, httpMethod, path});
+  const { httpMethod, path } = event;
+  return routeRequest({ event, httpMethod, path });
 };

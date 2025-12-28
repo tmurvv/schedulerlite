@@ -1,17 +1,17 @@
-import type {TypeOfWork} from "../enums/type-of-work";
+import type { TypeOfWork } from "../enums/type-of-work";
 
 export type Timesheet = {
-    id: string;
-    userId: string;
-    projectId: string;
+  id: string;
+  userId: string;
+  projectId: string;
 
-    start: Date;
-    end: Date;
-    lunchInMinutes: number;
+  start: Date;
+  end: Date;
+  lunchInMinutes: number;
 
-    typeOfWork: TypeOfWork;
-    notes?: string;
+  typeOfWork: TypeOfWork;
+  notes?: string;
 
-    createdOn: Date;
-    updatedOn: Date;
+  createdOn: Date;
+  updatedOn: Date;
 };

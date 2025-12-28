@@ -48,5 +48,5 @@ phases:
 
 artifacts:
   files:
-    - '**/*'
+    - "**/*"
   base-directory: infra/dist/cdk

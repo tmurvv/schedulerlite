@@ -1,20 +1,20 @@
-import type {AppRole} from "../enums/app-role";
-import type {BusinessRole} from "../enums/business-role";
+import type { AppRole } from "../enums/app-role";
+import type { BusinessRole } from "../enums/business-role";
 
 export type User = {
-    id: string;
+  id: string;
 
-    firstName: string;
-    lastName: string;
-    email: string;
+  firstName: string;
+  lastName: string;
+  email: string;
 
-    passwordHash: string;
+  passwordHash: string;
 
-    businessRoles: BusinessRole[];
-    appRoles: AppRole[];
+  businessRoles: BusinessRole[];
+  appRoles: AppRole[];
 
-    isActive: boolean;
+  isActive: boolean;
 
-    createdOn: Date;
-    updatedOn: Date;
+  createdOn: Date;
+  updatedOn: Date;
 };
