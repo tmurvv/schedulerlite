@@ -36,7 +36,8 @@ export const Banner = () => {
         />
         <Typography
           // align={"right"}
-          variant={"p"}
+          component={"p"}
+          variant={"body1"}
           sx={{ color: "#fff", flex: 9 }}
         >
           Ultimate Renovations Scheduler

@@ -1,5 +1,6 @@
 packages:
   - "apps/*/api"
+  - "apps/*/auth"
   - "apps/*/ui"
   - "infra"
   - "libs/*"

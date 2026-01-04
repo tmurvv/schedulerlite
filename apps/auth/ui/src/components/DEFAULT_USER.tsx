@@ -1,11 +1,11 @@
-import { UserRoles } from "../../enums/UserRoles";
+import { BUSINESS_ROLE } from "@schedulerlite/shared/src/enums/business-role";
 
 export const DEFAULT_USER = {
   firstname: "",
   lastname: "",
   password: "",
   passwordChangedAt: new Date(),
-  userRoles: [UserRoles.PROJECT_MANAGER],
+  userRoles: [BUSINESS_ROLE.projectManager],
   id: "",
   email: "",
 };

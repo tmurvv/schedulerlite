@@ -1,9 +1,12 @@
 import axios from "axios";
 import { Box, Button, FormControl, TextField } from "@mui/material";
-import { v4 as uuid } from "uuid";
-import { useContext, useState } from "react";
+import {
+  // useContext,
+  ChangeEvent,
+  useState,
+} from "react";
 
-import { ViewContext } from "../App";
+// import { ViewContext } from "../App";
 import { colorScheme } from "../constants/colors";
 // import LoginSignupCSS from "../styles/LoginSignup.css";
 // import IndexCss from "../styles/index.css";
@@ -15,15 +18,20 @@ const schedulerVarName = `VITE_APP_${import.meta.env.VITE_APP_ENV?.toUpperCase()
 const apiUrl = import.meta.env[apiVarName];
 const schedulerUrl = import.meta.env[schedulerVarName];
 
-function ResetPassword({ email }) {
-  const { setView } = useContext(ViewContext);
-  const [open, setOpen] = useState(false);
+type ResetPasswordProps = {
+  email?: string;
+};
+
+export const ResetPassword = ({ email }: ResetPasswordProps) => {
+  // const { setView } = useContext(ViewContext);
+  // const [open, setOpen] = useState(false);
   const [passwords, setPasswords] = useState({
     password: "",
     confirmpassword: "",
   });
-  const handleChange = (e) =>
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPasswords({ ...passwords, [e.target.name]: e.target.value });
+  };
   const handleSubmit = async () => {
     // check password length
     if (passwords.password?.length < 8) {
@@ -50,9 +58,11 @@ function ResetPassword({ email }) {
         window.location.href = `${schedulerUrl}`;
       }, 500);
     } catch (e) {
-      // log error
-      console.log(e.message);
-
+      if (e instanceof Error) {
+        console.log(e.message);
+      } else {
+        console.log(String(e));
+      }
       // in-app message
       setTimeout(() => {
         alert("Something went wrong resetting password.");
@@ -88,18 +98,12 @@ function ResetPassword({ email }) {
                   }}
                 >
                   <Box m={1}>
-                    <TextField
-                      disabled
-                      label={"Email"}
-                      id={uuid()}
-                      value={email}
-                    />
+                    <TextField disabled label={"Email"} value={email} />
                   </Box>
                   <Box m={1}>
                     <TextField
                       label={"New Password"}
                       type="password"
-                      id={uuid()}
                       value={passwords.password}
                       // value={"demoPassword"}
                       onChange={handleChange}
@@ -112,7 +116,6 @@ function ResetPassword({ email }) {
                     <TextField
                       label={"Confirm New Password"}
                       type="password"
-                      id={uuid()}
                       value={passwords.confirmpassword}
                       onChange={handleChange}
                       name="confirmpassword"
@@ -144,6 +147,6 @@ function ResetPassword({ email }) {
       </Box>
     </>
   );
-}
+};
 
 export default ResetPassword;

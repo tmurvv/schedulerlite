@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "format": "prettier \"**/*.{ts,tsx,js,jsx,json,md}\" --write",
-    "precom": "pnpm exec prettier --write . && pnpm -C apps/timesheets/ui exec tsc -p tsconfig.app.json --noEmit && pnpm -C apps/timesheets/api exec tsc --noEmit",
+    "precom": "pnpm exec prettier --write . && pnpm -C apps/timesheets/ui exec tsc -p tsconfig.app.json --noEmit && pnpm -C apps/timesheets/api exec tsc --noEmit && pnpm -C apps/auth/ui exec tsc -p tsconfig.app.json --noEmit && pnpm -C apps/auth/api exec tsc --noEmit",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
