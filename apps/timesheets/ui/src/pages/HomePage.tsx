@@ -3,7 +3,7 @@ import { Box, Button, Paper, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { Header } from "../components/Header";
 
-export const LoginPage = () => {
+export const HomePage = () => {
   const navigate = useNavigate();
 
   return (
@@ -20,11 +20,11 @@ export const LoginPage = () => {
         elevation={3}
         sx={{ width: "100%", maxWidth: 420, mx: "auto", overflow: "hidden" }}
       >
-        <Header title={"Login"} />
+        <Header title={"Home"} />
 
         <Box sx={{ p: 3 }}>
           <Typography sx={{ mb: 3 }} color="text.secondary">
-            Login NYI
+            Welcome to SchudulerLite - Timesheets
           </Typography>
 
           <Button

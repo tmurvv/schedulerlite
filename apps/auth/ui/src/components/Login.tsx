@@ -14,10 +14,13 @@ type LoginForm = {
 
 const apiVarName = `VITE_APP_${import.meta.env.VITE_APP_ENV?.toUpperCase()}_API_URL`;
 const schedulerVarName = `VITE_APP_${import.meta.env.VITE_APP_ENV?.toUpperCase()}_SCHEDULER_URL`;
+const timesheetsVarName = `VITE_APP_${import.meta.env.VITE_APP_ENV?.toUpperCase()}_TIMESHEETS_URL`;
 const uiVarName = `VITE_APP_${import.meta.env.VITE_APP_ENV?.toUpperCase()}_UI_URL`;
+
 
 const apiUrl = import.meta.env[apiVarName];
 const schedulerUrl = import.meta.env[schedulerVarName];
+const timesheetsUrl = import.meta.env[timesheetsVarName];
 const uiUrl = import.meta.env[uiVarName];
 
 export const Login = () => {
@@ -35,10 +38,10 @@ export const Login = () => {
                 password: user.password,
             });
             console.log('res', res)
-debugger;
             const token = res.data?.token;
             console.log('schedulerUrl', schedulerUrl)
-            window.location.href = `${schedulerUrl}?tkn=${token}`;
+            console.log('timesheetsUrl', timesheetsUrl)
+            window.location.href = `${timesheetsUrl}?tkn=${token}`;
         } catch (e: unknown) {
             if (e instanceof Error) {
                 console.log("error from login", e.message);

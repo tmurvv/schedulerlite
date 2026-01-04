@@ -24,6 +24,10 @@ const uiVarName = `VITE_APP_${import.meta.env.VITE_APP_ENV?.toUpperCase()}_UI_UR
 const apiUrl = import.meta.env[apiVarName];
 const uiUrl = import.meta.env[uiVarName];
 
+console.log("apiVarName:", apiVarName);
+console.log("uiVarName:", uiVarName);
+console.log("apiUrl:", apiUrl);
+console.log("uiUrl:", uiUrl);
 export const SignUp = () => {
   const [user, setUser] = useState<UserSignUpForm>({
     firstName: "",
@@ -80,6 +84,7 @@ export const SignUp = () => {
       userRoles: [UserRoles.PROJECT_MANAGER],
     };
 
+    console.log('newUser', newUser)
     try {
       const res = await axios.put(`${apiUrl}/api/v1/signup/${id}`, newUser);
 
@@ -89,8 +94,9 @@ export const SignUp = () => {
         );
         window.location.href = `${uiUrl}`;
       }
-    } catch {
+    } catch (e) {
       alert("Something went wrong on signup. Please try again.");
+      console.log('e', e)
     }
   };
 

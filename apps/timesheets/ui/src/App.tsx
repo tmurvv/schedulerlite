@@ -1,13 +1,13 @@
 // src/App.tsx
 import { Navigate, Route, Routes } from "react-router-dom";
 
-import { LoginPage } from "./pages/LoginPage";
+import { HomePage } from "./pages/HomePage";
 import { TimesheetPage } from "./pages/TimesheetPage";
 
 export const App = () => (
   <Routes>
-    <Route path="/login" element={<LoginPage />} />
+    <Route path="/home" element={<HomePage />} />
     <Route path="/timesheets/new" element={<TimesheetPage />} />
-    <Route path="*" element={<Navigate to="/login" replace />} />
+    <Route path="*" element={<Navigate to="/home" replace />} />
   </Routes>
 );

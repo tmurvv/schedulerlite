@@ -1,7 +1,7 @@
 // src/components/Header.tsx
 import { Box, Typography } from "@mui/material";
 
-import logo from "../assets/logo.png";
+import logo from "../../assets/logo.png";
 
 export const Header = ({ title }: { title: string }) => {
   return (
@@ -10,7 +10,7 @@ export const Header = ({ title }: { title: string }) => {
         sx={{
           bgcolor: "primary.main",
           color: "common.white",
-            p: "20px",
+          p: "20px",
         }}
       >
         <Box

@@ -6,13 +6,16 @@ import { ThemeProvider, CssBaseline } from "@mui/material";
 
 import { theme } from "./theme/theme";
 import { App } from "./App";
+import { AuthProvider } from "./AuthProvider";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <BrowserRouter>
-        <App />
+        <AuthProvider>
+          <App />
+        </AuthProvider>
       </BrowserRouter>
     </ThemeProvider>
   </StrictMode>,

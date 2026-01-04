@@ -3,7 +3,7 @@ import { SignUp } from "./components/SignUp";
 import { Box } from "@mui/material";
 import { createContext, Dispatch, SetStateAction, useState } from "react";
 import { ViewContexts } from "./enums/ViewContexts";
-import { Banner as MobileBanner } from "./components/mobile/Banner";
+import { Header } from "./components/mobile/Header";
 import ResetPassword from "./components/ResetPassword";
 
 export const ViewContext = createContext<{
@@ -38,7 +38,7 @@ function App() {
   // },[]);
   return (
     <ViewContext.Provider value={{ view, setView }}>
-      {<MobileBanner />}
+      {<Header title={"Home"}/>}
       v0.1.3a
       <Box>
         {!email && view === ViewContexts.LOGIN && <Login />}
