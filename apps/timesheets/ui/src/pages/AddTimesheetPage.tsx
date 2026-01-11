@@ -4,11 +4,9 @@ import {
   MenuItem,
   Paper,
   TextField,
-  Typography,
 } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 
-import { Header } from "../components/Header";
 import { saveTimesheet } from "../api/save-timesheet";
 import type { TypeOfWork } from "@schedulerlite/shared/src";
 import { TYPE_OF_WORK } from "@schedulerlite/shared/src";
@@ -31,7 +29,7 @@ const toDateTimeLocalValue = (dateValue: Date) => {
   return `${year}-${month}-${day}T${hours}:${minutes}`;
 };
 
-export const TimesheetPage = () => {
+export const AddTimesheetPage = () => {
   const getDefaultValues = () => {
     const now = new Date();
     return {
@@ -77,14 +75,8 @@ export const TimesheetPage = () => {
 
   return (
     <Box sx={{ bgcolor: "background.default", minHeight: "100vh" }}>
-      <Header title="" />
-
       <Box sx={{ p: 2 }}>
         <Paper sx={{ maxWidth: 600, mx: "auto", p: 3 }}>
-          <Typography sx={{ mb: 2 }} variant="h6">
-            Timesheet
-          </Typography>
-
           <Box
             component="form"
             onSubmit={handleSubmit(onSubmit)}
