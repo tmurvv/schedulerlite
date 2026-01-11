@@ -1,9 +1,15 @@
 import { useEffect, useState } from "react";
 
-import {SimpleSpinner} from "./components/SimpleSpinner";
+import { SimpleSpinner } from "./components/SimpleSpinner";
+import { UserProvider } from "./contexts/UserContext";
+
+import { isBusinessRole } from "@schedulerlite/shared/dist/enums/business-role";
+import { isAppRole } from "@schedulerlite/shared/dist/enums/app-role";
+
+import type { UserContextInput } from "./contexts/UserContext";
 
 export const AuthProvider = ({ children }) => {
-  const [isReady, setIsReady] = useState(false);
+    const [userValue, setUserValue] = useState<UserContextInput | null>(null);
 
     useEffect(() => {
         const run = async () => {
@@ -19,33 +25,51 @@ export const AuthProvider = ({ children }) => {
             const token = localStorage.getItem("authToken");
 
             if (!token) {
-                window.location.href = "http://localhost:5173"; // auth login
+                window.location.href = "http://localhost:5173";
                 return;
             }
 
-            const payloadBase64 = token.split(".")[1];
-            const decodedPayload = JSON.parse(atob(payloadBase64));
-            console.log("decoded", decodedPayload)
-            const expiresAtMs = decodedPayload.exp * 1000;
-            const isExpired = Date.now() >= expiresAtMs;
+            const decodedPayload = (() => {
+                try {
+                    const payloadBase64 = token.split(".")[1];
+                    return JSON.parse(atob(payloadBase64));
+                } catch {
+                    return null;
+                }
+            })();
 
-            if (isExpired) {
+            if (!decodedPayload || Date.now() >= decodedPayload.exp * 1000) {
                 localStorage.removeItem("authToken");
-                window.location.href = "http://localhost:5173"; // auth login
+                window.location.href = "http://localhost:5173";
                 return;
             }
 
-            setIsReady(true);
+            const businessRoles =
+                Array.isArray(decodedPayload.credentials?.userRoles)
+                    ? decodedPayload.credentials.userRoles.filter(isBusinessRole)
+                    : [];
+
+            const appRoles =
+                Array.isArray(decodedPayload.appRoles)
+                    ? decodedPayload.appRoles.filter(isAppRole)
+                    : [];
+
+            setUserValue({
+                userId: decodedPayload.id,
+                email: decodedPayload.email,
+                firstName: decodedPayload.firstname,
+                lastName: decodedPayload.lastname,
+                businessRoles: businessRoles.length ? businessRoles : ["Operations"],
+                appRoles: appRoles.length ? appRoles : ["User"],
+            });
         };
 
-        run().then();
+        run();
     }, []);
 
-    if (!isReady) {
-    return (
-      <SimpleSpinner />
-    );
-  }
+    if (!userValue) {
+        return <SimpleSpinner />;
+    }
 
-  return children;
+    return <UserProvider value={userValue}>{children}</UserProvider>;
 };
